@@ -12,6 +12,11 @@ async function getPrompt({ id }) {
     return prompt;
 }
 
+async function getPrompts() {
+    const prompts = await prisma.prompt.findMany();
+    return prompts;
+}
+
 async function updatePrompt({ id, data }) {
     const updatedPrompt = await prisma.prompt.update({
         where: { id: parseInt(id) },
@@ -21,9 +26,14 @@ async function updatePrompt({ id, data }) {
 }
 
 async function deletePrompt({ id }) {
-    await prisma.prompt.delete({
-        where: { id: parseInt(id) },
-    });
+    try {
+        await prisma.prompt.delete({
+            where: { id: parseInt(id) },
+        });
+        return true; }
+    catch (error) {
+        return false;
+    }
 }
 
-module.exports = { createPrompt, getPrompt, updatePrompt, deletePrompt };
+module.exports = { createPrompt, getPrompt, getPrompts, updatePrompt, deletePrompt };
