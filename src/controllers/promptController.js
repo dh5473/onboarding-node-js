@@ -30,6 +30,15 @@ async function getPrompt(req, res) {
     }
 }
 
+async function getPrompts(req, res) {
+    try {
+        const prompts = await promptService.getPrompts();
+        res.status(200).json(prompts);
+    } catch (error) {
+        res.status(500).json({ error: '프롬프트 조회 중 오류가 발생했습니다.' });
+    }
+}
+
 async function updatePrompt(req, res) {
     const { id } = req.params;
     const { promptTitle, promptContent } = req.body;
@@ -50,11 +59,11 @@ async function updatePrompt(req, res) {
 async function deletePrompt(req, res) {
     const { id } = req.params;
     try {
-        await promptService.deletePrompt({ id });
-        res.status(204).send();
+        const result = await promptService.deletePrompt({ id });
+        res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ error: '프롬프트 삭제 중 오류가 발생했습니다.' });
     }
 }
 
-module.exports = { createPrompt, getPrompt, updatePrompt, deletePrompt };
+module.exports = { createPrompt, getPrompt, getPrompts, updatePrompt, deletePrompt };
