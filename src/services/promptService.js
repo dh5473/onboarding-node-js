@@ -1,19 +1,19 @@
-const prisma = require('../loaders/prisma');
+const { prisma } = require('../loaders/prisma');
 
 async function createPrompt({ data }) {
-    const newPrompt = await prisma.prisma.prompt.create({ data });
+    const newPrompt = await prisma.prompt.create({ data });
     return newPrompt;
 }
 
 async function getPrompt({ id }) {
-    const prompt = await prisma.prisma.prompt.findUnique({
+    const prompt = await prisma.prompt.findUnique({
         where: { id: parseInt(id) },
     });
     return prompt;
 }
 
 async function updatePrompt({ id, data }) {
-    const updatedPrompt = await prisma.prisma.prompt.update({
+    const updatedPrompt = await prisma.prompt.update({
         where: { id: parseInt(id) },
         data,
     });
@@ -21,7 +21,7 @@ async function updatePrompt({ id, data }) {
 }
 
 async function deletePrompt({ id }) {
-    await prisma.prisma.prompt.delete({
+    await prisma.prompt.delete({
         where: { id: parseInt(id) },
     });
 }
