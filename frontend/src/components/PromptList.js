@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getPrompt, getPrompts, addPrompt, updatePrompt, deletePrompt } from "../apiService";
+import {
+  getPrompt,
+  getPrompts,
+  addPrompt,
+  updatePrompt,
+  deletePrompt,
+} from "../apiService";
 
 function PromptList() {
   const [prompts, setPrompts] = useState([]);
@@ -9,8 +15,9 @@ function PromptList() {
     getPrompts().then((data) => {
       if (data) {
         setPrompts(data);
-      }});
-    }, []);
+      }
+    });
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,7 +30,7 @@ function PromptList() {
       promptContent: form.content,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    }
+    };
     const newPrompt = await addPrompt(newData);
     if (newPrompt) {
       setPrompts([...prompts, newPrompt]);
@@ -40,7 +47,7 @@ function PromptList() {
     const updatedData = {
       promptTitle: form.title,
       promptContent: form.content,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
     const updatedPrompt = await updatePrompt(form.id, updatedData);
     if (updatedPrompt) {
@@ -58,7 +65,9 @@ function PromptList() {
 
   return (
     <div className="my-6 p-6 max-w-lg mx-auto space-y-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold text-center text-gray-800">Prompt Manager</h1>
+      <h1 className="text-2xl font-bold text-center text-gray-800">
+        Prompt Manager
+      </h1>
 
       {/* 입력 폼 */}
       <div className="border p-4 rounded-lg shadow-md space-y-2 bg-gray-100 sticky top-0 z-10">
@@ -88,16 +97,29 @@ function PromptList() {
       {/* 프롬프트 리스트 */}
       <ul className="space-y-4 max-h-[400px] overflow-y-auto">
         {prompts.map((prompt) => (
-          <li key={prompt.id} className="border p-4 rounded-lg shadow-md bg-gray-50">
-            <h2 className="text-xl font-bold text-gray-800">{prompt.promptTitle}</h2>
+          <li
+            key={prompt.id}
+            className="border p-4 rounded-lg shadow-md bg-gray-50"
+          >
+            <h2 className="text-xl font-bold text-gray-800">
+              {prompt.promptTitle}
+            </h2>
             <p className="text-gray-700">{prompt.promptContent}</p>
-            <p className="text-sm text-gray-500">Created at: {new Date(prompt.createdAt).toLocaleString()}</p>
+            <p className="text-sm text-gray-500">
+              Created at: {new Date(prompt.createdAt).toLocaleString()}
+            </p>
 
             <div className="mt-2 flex space-x-2 justify-end">
-              <button onClick={() => handleEdit(prompt)} className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+              <button
+                onClick={() => handleEdit(prompt)}
+                className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
                 Edit
               </button>
-              <button onClick={() => handleDelete(prompt.id)} className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+              <button
+                onClick={() => handleDelete(prompt.id)}
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              >
                 Delete
               </button>
             </div>

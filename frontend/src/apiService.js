@@ -26,6 +26,8 @@ const request = async (endpoint, method = "", body = null) => {
 
 export const getPrompt = (id) => request(`/prompts/${id}`, "GET");
 export const getPrompts = () => request("/prompts", "GET");
-export const addPrompt = (promptData) => request("/prompts", "POST", promptData);
-export const updatePrompt = (id, promptData) => request(`/prompts/${id}`, "PUT", promptData);
+export const addPrompt = (promptData) =>
+  request("/prompts", "POST", promptData);
+export const updatePrompt = (id, promptData) =>
+  request(`/prompts/${id}`, "PUT", promptData);
 export const deletePrompt = (id) => request(`/prompts/${id}`, "DELETE");
